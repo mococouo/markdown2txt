@@ -1,0 +1,30 @@
+===== Markdown 转 TXT - 打包分发说明 =====
+
+【必须包含】
+1. index.html
+2. styles.css
+3. script.js
+4. 使用说明.txt
+
+【可选包含】
+1. example.md
+2. readme.md
+3. README_web.md
+
+【打包方法】
+1. 将上述文件放在同一个文件夹中
+2. 压缩为 ZIP
+3. 用户解压后双击 index.html 即可使用
+
+【分发卖点】
+- 完全离线
+- 无需安装
+- 无需注册
+- 不上传用户内容
+- 支持批量 Markdown 转 TXT
+
+【GitHub 发布建议】
+1. 仓库首页添加界面截图或 GIF
+2. Release 上传 ZIP 包
+3. README 标题突出 Offline Markdown to TXT
+4. Topics 可使用 markdown, txt, offline, batch, converter

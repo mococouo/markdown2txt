@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to TXT</title>
+    <meta name="description" content="A zero-install, offline Markdown to TXT converter with batch processing and multilingual UI.">
+    <meta name="keywords" content="markdown, txt, converter, offline, batch, privacy, multilingual">
+    <meta property="og:title" content="Markdown to TXT">
+    <meta property="og:description" content="Convert Markdown to plain text locally in your browser.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6feb'/%3E%3Cpath fill='white' d='M14 18h36v7H14zm0 11h26v6H14zm0 10h36v6H14z'/%3E%3C/svg%3E">
+    <meta name="theme-color" content="#f6f8fb">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-mark">M</div>
+                <div>
+                    <h1 data-i18n="appTitle">Markdown to TXT</h1>
+                    <p data-i18n="appSubtitle">Offline converter · Batch ready · Privacy first</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <label class="language-field">
+                    <span data-i18n="languageLabel">Language</span>
+                    <select id="language-select" aria-label="Language">
+                    </select>
+                </label>
+                <button id="paste-btn" class="btn" data-i18n="paste">Paste</button>
+                <label id="open-file-label" for="file-upload" class="btn" data-i18n="openFiles">Open files</label>
+                <input id="file-upload" type="file" accept=".md,.markdown,.txt" multiple hidden>
+                <button id="sample-btn" class="btn btn-ghost" data-i18n="sample">Sample</button>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <aside class="control-panel" aria-label="Conversion settings" data-i18n-aria-label="settingsAria">
+                <section class="control-section">
+                    <h2 data-i18n="modeTitle">Conversion style</h2>
+                    <div class="segmented" role="radiogroup" aria-label="Conversion style" data-i18n-aria-label="modeTitle">
+                        <button class="segment active" data-mode="normal" role="radio" aria-checked="true" data-i18n="modeNormal">Standard</button>
+                        <button class="segment" data-mode="clean" role="radio" aria-checked="false" data-i18n="modeClean">Clean</button>
+                        <button class="segment" data-mode="structured" role="radio" aria-checked="false" data-i18n="modeStructured">Structured</button>
+                    </div>
+                </section>
+
+                <section class="control-section">
+                    <h2 data-i18n="rulesTitle">Output rules</h2>
+                    <label class="switch-row">
+                        <input id="keep-links" type="checkbox" checked>
+                        <span data-i18n="keepLinks">Keep link URLs</span>
+                    </label>
+                    <label class="switch-row">
+                        <input id="keep-code" type="checkbox" checked>
+                        <span data-i18n="keepCode">Keep code blocks</span>
+                    </label>
+                    <label class="switch-row">
+                        <input id="remove-frontmatter" type="checkbox" checked>
+                        <span data-i18n="removeFrontmatter">Remove front matter</span>
+                    </label>
+                    <label class="switch-row">
+                        <input id="auto-convert" type="checkbox" checked>
+                        <span data-i18n="autoConvert">Auto convert while typing</span>
+                    </label>
+                </section>
+
+                <section class="control-section file-section">
+                    <div class="section-title-row">
+                        <h2 data-i18n="fileQueue">File queue</h2>
+                        <button id="clear-files-btn" class="text-btn" data-i18n="clear">Clear</button>
+                    </div>
+                    <div id="drop-area" class="drop-area" tabindex="0">
+                        <strong data-i18n="dropTitle">Drop Markdown files here</strong>
+                        <span data-i18n="dropSubtitle">Supports .md, .markdown and .txt files</span>
+                    </div>
+                    <div id="file-list" class="file-list" aria-live="polite"></div>
+                </section>
+            </aside>
+
+            <section class="editor-area">
+                <div class="toolbar">
+                    <div id="active-file-label" class="active-file" data-i18n="manualInput">Manual input</div>
+                    <div class="toolbar-actions">
+                        <button id="convert-btn" class="btn btn-primary" data-i18n="convert">Convert</button>
+                        <button id="copy-btn" class="btn" data-i18n="copyResult">Copy result</button>
+                        <button id="download-btn" class="btn" data-i18n="downloadCurrent">Download current</button>
+                        <button id="download-all-btn" class="btn btn-ghost" data-i18n="downloadAll">Download all</button>
+                        <button id="clear-input-btn" class="btn btn-ghost" data-i18n="clear">Clear</button>
+                    </div>
+                </div>
+
+                <div class="panes">
+                    <section class="pane">
+                        <div class="pane-header">
+                            <h2>Markdown</h2>
+                            <div id="input-stats" class="stats">0 chars · 0 lines</div>
+                        </div>
+                        <textarea id="markdown-input" spellcheck="false" placeholder="Paste Markdown here, or drop files to start converting" data-i18n-placeholder="inputPlaceholder"></textarea>
+                    </section>
+
+                    <section class="pane">
+                        <div class="pane-header">
+                            <h2>TXT</h2>
+                            <div id="output-stats" class="stats">0 chars · 0 lines</div>
+                        </div>
+                        <textarea id="txt-output" spellcheck="false" readonly placeholder="Converted TXT will appear here" data-i18n-placeholder="outputPlaceholder"></textarea>
+                    </section>
+                </div>
+            </section>
+        </main>
+
+        <footer class="status-line">
+            <span id="status-bar">Ready</span>
+            <span id="privacy-note" data-i18n="privacyNote">Everything is processed locally in your browser</span>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
