@@ -8,6 +8,8 @@ A zero-install, offline Markdown to TXT converter that runs entirely in your bro
 
 Use it to turn Markdown notes, AI outputs, documentation drafts, copied web content, and Obsidian notes into clean plain text. It supports manual input, drag-and-drop, batch files, output rules, multilingual UI, copy, and download.
 
+> Built with AI coding models. Designed from real workflow problems.
+
 ## Highlights
 
 - Fully static: just `index.html`, `styles.css`, `script.js`, `sw.js`, and `manifest.webmanifest`.
@@ -20,6 +22,10 @@ Use it to turn Markdown notes, AI outputs, documentation drafts, copied web cont
 - Dark mode with system preference detection and manual toggle.
 - Multilingual UI (20 languages) with LTR and RTL support.
 - Works directly from local files or GitHub Pages.
+
+## Download
+
+Download source archives from [GitHub Releases](https://github.com/mococouo/markdown2txt/releases), or open `index.html` directly in your browser.
 
 ## Try It
 
