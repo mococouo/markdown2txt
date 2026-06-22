@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6feb'/%3E%3Cpath fill='white' d='M14 18h36v7H14zm0 11h26v6H14zm0 10h36v6H14z'/%3E%3C/svg%3E">
     <meta name="theme-color" content="#f6f8fb">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+    <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
+    <a href="#markdown-input" class="skip-link" data-i18n="skipToInput">Skip to input</a>
     <div class="app-shell">
         <header class="app-header">
             <div class="brand">
@@ -24,6 +27,7 @@
                 </div>
             </div>
             <div class="header-actions">
+                <button id="theme-btn" class="btn btn-ghost btn-icon" data-i18n-title="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌙</button>
                 <label class="language-field">
                     <span data-i18n="languageLabel">Language</span>
                     <select id="language-select" aria-label="Language">
@@ -48,20 +52,30 @@
                 </section>
 
                 <section class="control-section">
+                    <h2 data-i18n="presetTitle">Preset</h2>
+                    <select id="preset-select" class="preset-select" data-i18n-aria-label="presetTitle">
+                        <option value="" data-i18n="presetNone">— Custom —</option>
+                        <option value="ai" data-i18n="presetAi">AI dataset cleaning</option>
+                        <option value="archive" data-i18n="presetArchive">Documentation archive</option>
+                        <option value="publish" data-i18n="presetPublish">Publishing</option>
+                    </select>
+                </section>
+
+                <section class="control-section">
                     <h2 data-i18n="rulesTitle">Output rules</h2>
-                    <label class="switch-row">
+                    <label class="switch-row" for="keep-links">
                         <input id="keep-links" type="checkbox" checked>
                         <span data-i18n="keepLinks">Keep link URLs</span>
                     </label>
-                    <label class="switch-row">
+                    <label class="switch-row" for="keep-code">
                         <input id="keep-code" type="checkbox" checked>
                         <span data-i18n="keepCode">Keep code blocks</span>
                     </label>
-                    <label class="switch-row">
+                    <label class="switch-row" for="remove-frontmatter">
                         <input id="remove-frontmatter" type="checkbox" checked>
                         <span data-i18n="removeFrontmatter">Remove front matter</span>
                     </label>
-                    <label class="switch-row">
+                    <label class="switch-row" for="auto-convert">
                         <input id="auto-convert" type="checkbox" checked>
                         <span data-i18n="autoConvert">Auto convert while typing</span>
                     </label>
@@ -84,10 +98,12 @@
                 <div class="toolbar">
                     <div id="active-file-label" class="active-file" data-i18n="manualInput">Manual input</div>
                     <div class="toolbar-actions">
-                        <button id="convert-btn" class="btn btn-primary" data-i18n="convert">Convert</button>
-                        <button id="copy-btn" class="btn" data-i18n="copyResult">Copy result</button>
+                        <button id="convert-btn" class="btn btn-primary" data-i18n="convert" data-i18n-title="convertTitle" title="Convert (Ctrl+Enter)">Convert</button>
+                        <button id="copy-btn" class="btn" data-i18n="copyResult" data-i18n-title="copyTitle" title="Copy result (Ctrl+Shift+C)">Copy result</button>
                         <button id="download-btn" class="btn" data-i18n="downloadCurrent">Download current</button>
                         <button id="download-all-btn" class="btn btn-ghost" data-i18n="downloadAll">Download all</button>
+                        <button id="download-zip-btn" class="btn btn-ghost" data-i18n="downloadZip">Download ZIP</button>
+                        <button id="help-btn" class="btn btn-ghost btn-icon" data-i18n-title="helpTitle" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
                         <button id="clear-input-btn" class="btn btn-ghost" data-i18n="clear">Clear</button>
                     </div>
                 </div>
@@ -113,11 +129,25 @@
         </main>
 
         <footer class="status-line">
-            <span id="status-bar">Ready</span>
+            <span id="status-bar" role="status" aria-live="polite">Ready</span>
             <span id="privacy-note" data-i18n="privacyNote">Everything is processed locally in your browser</span>
         </footer>
     </div>
 
     <script src="script.js"></script>
+
+    <dialog id="help-dialog" class="help-dialog">
+        <div class="help-header">
+            <h2 data-i18n="helpTitle">Keyboard shortcuts</h2>
+            <button id="help-close" class="text-btn" aria-label="Close">×</button>
+        </div>
+        <ul class="help-list">
+            <li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> <span data-i18n="helpConvert">Convert</span></li>
+            <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> <span data-i18n="helpCopy">Copy result</span></li>
+            <li><kbd>Ctrl</kbd>+<kbd>D</kbd> <span data-i18n="helpDownload">Download current</span></li>
+            <li><kbd>?</kbd> <span data-i18n="helpToggle">Toggle this help</span></li>
+            <li><kbd>Esc</kbd> <span data-i18n="helpClose2">Close dialog</span></li>
+        </ul>
+    </dialog>
 </body>
 </html>

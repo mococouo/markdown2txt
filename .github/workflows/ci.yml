@@ -14,3 +14,5 @@ jobs:
           node-version: "20"
       - name: Check JavaScript syntax
         run: node --check script.js
+      - name: Run converter tests
+        run: node test/converter.test.js

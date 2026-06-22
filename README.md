@@ -10,13 +10,15 @@ Use it to turn Markdown notes, AI outputs, documentation drafts, copied web cont
 
 ## Highlights
 
-- Fully static: just `index.html`, `styles.css`, and `script.js`.
-- Offline-first: no server, no CDN, no upload.
+- Fully static: just `index.html`, `styles.css`, `script.js`, `sw.js`, and `manifest.webmanifest`.
+- Offline-first: no server, no CDN, no upload. Installable as a PWA.
 - Batch-ready: drag multiple `.md`, `.markdown`, or `.txt` files.
 - Three conversion styles: Standard, Clean, and Structured.
+- Conversion presets: AI dataset cleaning, documentation archive, publishing.
 - Output rule toggles for links, code blocks, and front matter.
-- Copy current result, download current output, or merge-download all outputs.
-- Multilingual UI with LTR and RTL support.
+- Copy current result, download current, merge-download all, or download ZIP.
+- Dark mode with system preference detection and manual toggle.
+- Multilingual UI (20 languages) with LTR and RTL support.
 - Works directly from local files or GitHub Pages.
 
 ## Try It
@@ -57,15 +59,48 @@ Arabic and Hebrew use RTL layout automatically.
 - **Clean**: produces compact plain text for pasting into simple editors or forms.
 - **Structured**: preserves heading hierarchy and code boundaries for readable archives.
 
+## Supported Syntax
+
+Beyond standard Markdown, the converter handles:
+
+- Inline and block math (`$...$`, `$$...$$`).
+- Footnotes (`[^id]` and definitions).
+- Auto-links (`<http://x>`).
+- Reference link definitions.
+- Admonitions (`!!! note ...`).
+- Definition lists.
+- Task lists with nested indentation.
+- Inline HTML allowlist (`<kbd>`, `<sup>`, `<sub>`, etc.).
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl+Enter` | Convert |
+| `Ctrl+Shift+C` | Copy result |
+| `Ctrl+D` | Download current |
+| `?` | Toggle shortcuts help |
+| `Esc` | Close dialog |
+
+## Tests
+
+```bash
+node --check script.js
+node test/converter.test.js
+```
+
 ## Project Structure
 
 ```text
 index.html          Static app shell
-styles.css          App styling and responsive layout
-script.js           Conversion logic, file handling, and i18n
+styles.css          App styling, responsive layout, dark mode
+script.js           Conversion pipeline, file handling, i18n, UI logic
+sw.js               Service worker for offline caching
+manifest.webmanifest  PWA manifest
 examples/           Sample Markdown files
 docs/               Usage, packaging, and roadmap notes
 legacy/             Older Python implementations kept for reference
+test/               Node-runnable converter tests
 ```
 
 ## GitHub Pages

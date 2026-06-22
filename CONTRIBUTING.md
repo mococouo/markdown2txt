@@ -32,3 +32,19 @@ Include:
 - What changed.
 - Which conversion mode or language is affected.
 - Manual browser checks performed.
+
+## Tests
+
+Run the Node-based converter tests before submitting:
+
+```bash
+node test/converter.test.js
+```
+
+Also run the syntax check:
+
+```bash
+node --check script.js
+```
+
+Both must pass. CI runs these automatically.
